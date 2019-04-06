@@ -1,0 +1,109 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "d42b45ea-32e6-4ee3-a9e3-c039cca1b9bf": {
+        "id": "d42b45ea-32e6-4ee3-a9e3-c039cca1b9bf",
+        "parent": null,
+        "name": "ServerlessDemo",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "e5eca00b-b05c-4ebf-9a52-73406cab9075"
+        ],
+        "isRemovable": false,
+        "filePath": "ServerlessDemo"
+      },
+      "e5eca00b-b05c-4ebf-9a52-73406cab9075": {
+        "id": "e5eca00b-b05c-4ebf-9a52-73406cab9075",
+        "parent": "d42b45ea-32e6-4ee3-a9e3-c039cca1b9bf",
+        "name": "SendSMS_Basic.js",
+        "type": "LAMBDA_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "ServerlessDemo/SendSMS_Basic.js",
+        "code": "let AWS = require('aws-sdk');\nconst sns = new AWS.SNS();\n\nexports.handler = function (event, context, callback) {\n    console.log(\"value1 = \" + event.mobile);\n    console.log(\"value2 = \" + event.key2); \n\n    sns.publish({\n        Message: 'hello',\n        Subject: 'Test',\n        MessageAttributes: {},\n        MessageStructure: 'String',\n        TopicArn: 'arn:aws:sns:ap-southeast-1:137351355934:DTI_Demo'\n    }).promise()\n        .then(data => {\n            // your code goes here\n        })\n        .catch(err => {\n            // error handling goes here\n            callback(error);\n        });\n}\n\n",
+        "triggers": [],
+        "config": {
+          "runtime": "nodejs8.10",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
+        },
+        "testCases": {
+          "0c760343-9d5a-416b-9dc5-8771e2279b2f": {
+            "id": "0c760343-9d5a-416b-9dc5-8771e2279b2f",
+            "name": "Test",
+            "functionId": "e5eca00b-b05c-4ebf-9a52-73406cab9075",
+            "event": "{\n    \"key1\": \"Ric\",\n    \"key2\": \"value2\",\n    \"key3\": \"value3\"\n}"
+          }
+        }
+      }
+    },
+    "deletedFiles": [
+      "ServerlessDemo/lambda.js"
+    ],
+    "rootNode": "d42b45ea-32e6-4ee3-a9e3-c039cca1b9bf",
+    "openFiles": [
+      "e5eca00b-b05c-4ebf-9a52-73406cab9075"
+    ],
+    "currentFileId": "e5eca00b-b05c-4ebf-9a52-73406cab9075",
+    "resources": {
+      "snsapSoutheast1DTIDemo": {
+        "name": "snsapSoutheast1DTIDemo",
+        "type": "SNS",
+        "config": {
+          "topicMode": 0,
+          "topicName": "DTI_Demo",
+          "topicArn": "arn:aws:sns:ap-southeast-1:137351355934:DTI_Demo",
+          "topicRegion": "ap-southeast-1",
+          "snsType": 0,
+          "topicDisplayName": "DTI_Demo",
+          "subscriptions": []
+        },
+        "globallyEditable": true
+      }
+    },
+    "customTemplate": {
+      "dialect": null,
+      "definitions": {}
+    },
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {
+        "aws-sdk": {
+          "name": "aws-sdk",
+          "version": "2.176.0",
+          "dev": true,
+          "notRemovable": false
+        }
+      }
+    }
+  },
+  "PROJECT_META": {
+    "projectName": "ServerlessDemo",
+    "projectDescription": "Demo for presentation",
+    "projectVersion": "1.0.0",
+    "projectRegion": "ap-southeast-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1554540153299
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "ServerlessDemo",
+      "url": "https://github.com/rictanvalientejr/ServerlessDemo"
+    }
+  }
+}
