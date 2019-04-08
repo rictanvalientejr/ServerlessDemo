@@ -22,7 +22,7 @@
         "children": [],
         "isRemovable": true,
         "filePath": "ServerlessDemo/SendSMS_Basic.js",
-        "code": "let AWS = require('aws-sdk');\nconst sns = new AWS.SNS();\n\nexports.handler = function (event, context, callback) {\n    console.log(\"value1 = \" + event.mobile);\n    console.log(\"value2 = \" + event.key2); \n\n    sns.publish({\n        Message: 'hello',\n        Subject: 'Test',\n        MessageAttributes: {},\n        MessageStructure: 'String',\n        TopicArn: 'arn:aws:sns:ap-southeast-1:137351355934:DTI_Demo'\n    }).promise()\n        .then(data => {\n            // your code goes here\n        })\n        .catch(err => {\n            // error handling goes here\n            callback(error);\n        });\n}\n\n",
+        "code": "let AWS = require('aws-sdk');\nconst sns = new AWS.SNS();\n\nexports.handler = function (event, context, callback) {\n    console.log(\"value1 = \" + event.mobile);\n    console.log(\"value2 = \" + event.key2); \n\n  \n}\n\n",
         "triggers": [],
         "config": {
           "runtime": "nodejs8.10",
@@ -41,9 +41,7 @@
         }
       }
     },
-    "deletedFiles": [
-      "ServerlessDemo/lambda.js"
-    ],
+    "deletedFiles": [],
     "rootNode": "d42b45ea-32e6-4ee3-a9e3-c039cca1b9bf",
     "openFiles": [
       "e5eca00b-b05c-4ebf-9a52-73406cab9075"
@@ -97,7 +95,7 @@
     "projectRegion": "ap-southeast-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1554540153299
+    "lastSave": 1554725369304
   },
   "VCS_STATE": {
     "provider": "GitHub",
