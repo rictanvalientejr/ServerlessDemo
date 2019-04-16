@@ -8,7 +8,9 @@
         "type": "DIRECTORY",
         "isDirectory": true,
         "children": [
-          "e5eca00b-b05c-4ebf-9a52-73406cab9075"
+          "e5eca00b-b05c-4ebf-9a52-73406cab9075",
+          "ee6f7b49-18c5-43c5-beeb-78c397f9be14",
+          "55843137-aeba-4597-89e4-8a0cc0bb7c63"
         ],
         "isRemovable": false,
         "filePath": "ServerlessDemo"
@@ -37,6 +39,66 @@
             "name": "Test",
             "functionId": "e5eca00b-b05c-4ebf-9a52-73406cab9075",
             "event": "{\n    \"key1\": \"Ric\",\n    \"key2\": \"value2\",\n    \"key3\": \"value3\"\n}"
+          },
+          "b68e1d2c-035f-4b9d-ad18-b55bf5077a6a": {
+            "id": "b68e1d2c-035f-4b9d-ad18-b55bf5077a6a",
+            "name": "name_save",
+            "functionId": "e5eca00b-b05c-4ebf-9a52-73406cab9075",
+            "event": "{\n    \"firstName\": \"Juan\",\n    \"lastName\": \"DelaCruz\"\n}"
+          }
+        }
+      },
+      "ee6f7b49-18c5-43c5-beeb-78c397f9be14": {
+        "id": "ee6f7b49-18c5-43c5-beeb-78c397f9be14",
+        "parent": "d42b45ea-32e6-4ee3-a9e3-c039cca1b9bf",
+        "name": "saveFNLN.js",
+        "type": "LAMBDA_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "ServerlessDemo/saveFNLN.js",
+        "code": "let AWS = require('aws-sdk');\nconst ddb = new AWS.DynamoDB.DocumentClient();\n\n\n\nexports.handler = function(event, context, callback) {\n    var uuid = require('node-uuid');\n    var uuid1 = uuid.v1();\n    console.log(uuid1);\n\n    var firstName = event.firstName;\n    var lastName = event.lastName;\n\n    ddb.put({TableName: 'Name_Test',\n             Item: {'UUID':uuid1, 'first_name':firstName,'last_name':lastName}\n                }).promise().then(function(data){\n            //your logic goes here\n\n            callback(null, {\"message\": \"Successfully saved name\"});\n    }).catch(function(err){\n        callback(err);\n    });\n    \n    \n}\n\n",
+        "triggers": [],
+        "config": {
+          "runtime": "nodejs8.10",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
+        },
+        "testCases": {
+          "7468c410-58bc-4ca4-80f1-32ed00e428af": {
+            "id": "7468c410-58bc-4ca4-80f1-32ed00e428af",
+            "name": "name_save",
+            "functionId": "ee6f7b49-18c5-43c5-beeb-78c397f9be14",
+            "event": "{\n    \"firstName\": \"Juan\",\n    \"lastName\": \"Dela Cruz\"\n}"
+          }
+        }
+      },
+      "55843137-aeba-4597-89e4-8a0cc0bb7c63": {
+        "id": "55843137-aeba-4597-89e4-8a0cc0bb7c63",
+        "parent": "d42b45ea-32e6-4ee3-a9e3-c039cca1b9bf",
+        "name": "searchFN.js",
+        "type": "LAMBDA_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "ServerlessDemo/searchFN.js",
+        "code": "let AWS = require('aws-sdk');\nconst ddb = new AWS.DynamoDB.DocumentClient();\n\nexports.handler = function(event, context, callback) {\n    var firstName = event.firstName;\n    var params = {\n        TableName : \"Name_Test\",\n        ProjectionExpression : \"first_name, last_name\",\n        FilterExpression : \" first_name = :fn\",\n        ExpressionAttributeValues: {\n            \":fn\": firstName\n        }\n    };\n\n    ddb.scan(params, function(err, data) {\n        if (err) {\n            console.error(\"Unable to query. Error:\", JSON.stringify(err, null, 2));\n        } else {\n            console.log(\"Query succeeded.\");\n            data.Items.forEach(function(record) {\n                console.log(JSON.stringify(record));\n                console.log(\" -\", record.first_name + \": \" + record.last_name);\n            });\n\n            var result = JSON.stringify(data.Items)\n            console.log (result);\n            callback(null, JSON.stringify(data.Items));\n        }\n    });\n\n}",
+        "triggers": [],
+        "config": {
+          "runtime": "nodejs8.10",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
+        },
+        "testCases": {
+          "00a11052-5ac2-4477-96f9-7f19f3a4e0dd": {
+            "id": "00a11052-5ac2-4477-96f9-7f19f3a4e0dd",
+            "name": "searchFN",
+            "functionId": "55843137-aeba-4597-89e4-8a0cc0bb7c63",
+            "event": "{\n    \"firstName\": \"Juan\"\n}"
           }
         }
       }
@@ -44,9 +106,11 @@
     "deletedFiles": [],
     "rootNode": "d42b45ea-32e6-4ee3-a9e3-c039cca1b9bf",
     "openFiles": [
-      "e5eca00b-b05c-4ebf-9a52-73406cab9075"
+      "e5eca00b-b05c-4ebf-9a52-73406cab9075",
+      "ee6f7b49-18c5-43c5-beeb-78c397f9be14",
+      "55843137-aeba-4597-89e4-8a0cc0bb7c63"
     ],
-    "currentFileId": "e5eca00b-b05c-4ebf-9a52-73406cab9075",
+    "currentFileId": "55843137-aeba-4597-89e4-8a0cc0bb7c63",
     "resources": {
       "snsapSoutheast1DTIDemo": {
         "name": "snsapSoutheast1DTIDemo",
@@ -72,6 +136,38 @@
           ]
         },
         "globallyEditable": false
+      },
+      "ddbNameTest": {
+        "name": "ddbNameTest",
+        "type": "DynamoDB",
+        "config": {
+          "mode": 1,
+          "operation": "query",
+          "table": {
+            "arn": "arn:aws:dynamodb:ap-southeast-1:137351355934:table/Name_Test",
+            "name": "Name_Test",
+            "partitionKey": "first_name",
+            "partitionKeyType": "S",
+            "hasSortKey": false,
+            "sortKey": "",
+            "sortKeyType": "S",
+            "mode": 1
+          },
+          "parameters": {
+            "Key": {},
+            "Item": {},
+            "ExpressionAttributeValues": {
+              ":first_name": "firstName"
+            }
+          },
+          "triggerParams": {},
+          "validator": {
+            "validatableFields": {},
+            "validity": true
+          },
+          "valid": true
+        },
+        "globallyEditable": false
       }
     },
     "customTemplate": {
@@ -95,6 +191,10 @@
           "version": "2.176.0",
           "dev": true,
           "notRemovable": false
+        },
+        "node-uuid": {
+          "name": "node-uuid",
+          "version": "1.4.8"
         }
       }
     }
@@ -106,7 +206,7 @@
     "projectRegion": "ap-southeast-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1554725697305
+    "lastSave": 1555386630359
   },
   "VCS_STATE": {
     "provider": "GitHub",
