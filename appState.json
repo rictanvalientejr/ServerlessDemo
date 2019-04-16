@@ -38,7 +38,7 @@
             "id": "0c760343-9d5a-416b-9dc5-8771e2279b2f",
             "name": "Test",
             "functionId": "e5eca00b-b05c-4ebf-9a52-73406cab9075",
-            "event": "{\n    \"key1\": \"Ric\",\n    \"key2\": \"value2\",\n    \"key3\": \"value3\"\n}"
+            "event": "{\n  \"sender\": \"DTIDEMO\",\n  \"receiver\": \"+639173124105\",\n  \"message\": \"HELLO WORLD\"\n}"
           },
           "b68e1d2c-035f-4b9d-ad18-b55bf5077a6a": {
             "id": "b68e1d2c-035f-4b9d-ad18-b55bf5077a6a",
@@ -84,7 +84,7 @@
         "children": [],
         "isRemovable": true,
         "filePath": "ServerlessDemo/searchFN.js",
-        "code": "let AWS = require('aws-sdk');\nconst ddb = new AWS.DynamoDB.DocumentClient();\n\nexports.handler = function(event, context, callback) {\n    var firstName = event.firstName;\n    var params = {\n        TableName : \"Name_Test\",\n        ProjectionExpression : \"first_name, last_name\",\n        FilterExpression : \" first_name = :fn\",\n        ExpressionAttributeValues: {\n            \":fn\": firstName\n        }\n    };\n\n    ddb.scan(params, function(err, data) {\n        if (err) {\n            console.error(\"Unable to query. Error:\", JSON.stringify(err, null, 2));\n        } else {\n            console.log(\"Query succeeded.\");\n            data.Items.forEach(function(record) {\n                console.log(JSON.stringify(record));\n                console.log(\" -\", record.first_name + \": \" + record.last_name);\n            });\n\n            var result = JSON.stringify(data.Items)\n            console.log (result);\n            callback(null, JSON.stringify(data.Items));\n        }\n    });\n\n}",
+        "code": "let AWS = require('aws-sdk');\nconst ddb = new AWS.DynamoDB.DocumentClient();\n\nexports.handler = function(event, context, callback) {\n    var firstName = event.firstName;\n    var params = {\n        TableName : \"Name_Test\",\n        ProjectionExpression : \"first_name, last_name\",\n        FilterExpression : \" first_name = :fn\",\n        ExpressionAttributeValues: {\n            \":fn\": firstName\n        }\n    };\n\n    ddb.scan(params, function(err, data) {\n        if (err) {\n            console.error(\"Unable to query. Error:\", JSON.stringify(err, null, 2));\n        } else {\n            console.log(\"Query succeeded.\");\n            data.Items.forEach(function(record) {\n                console.log(JSON.stringify(record));\n                console.log(\" -\", record.first_name + \": \" + record.last_name);\n            });\n\n            var result = JSON.stringify(data.Items)\n            console.log (result);\n            callback(null, data.Items);\n        }\n    });\n\n}",
         "triggers": [],
         "config": {
           "runtime": "nodejs8.10",
@@ -206,7 +206,7 @@
     "projectRegion": "ap-southeast-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1555386630359
+    "lastSave": 1555409597478
   },
   "VCS_STATE": {
     "provider": "GitHub",

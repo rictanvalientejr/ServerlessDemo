@@ -24,7 +24,7 @@ exports.handler = function(event, context, callback) {
 
             var result = JSON.stringify(data.Items)
             console.log (result);
-            callback(null, JSON.stringify(data.Items));
+            callback(null, data.Items);
         }
     });
 
